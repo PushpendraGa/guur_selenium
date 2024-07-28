@@ -1,49 +1,77 @@
 package pageClass;
 
-import java.io.File;
+import static org.testng.Assert.assertEquals;
 
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
-
+import org.testng.Assert;
 import org.testng.annotations.*;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class baseClass {
 
-	public WebDriver driver;
+	public static void main(String[] args) throws InterruptedException {
 
-	@BeforeTest
-	public void lounchBroswer() {
-
-		driver = new ChromeDriver();
-		driver.get("https://www.flipkart.com/");
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver = new ChromeDriver();
 		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.get("https://demoqa.com/");
 
-	}
+		JavascriptExecutor js = (JavascriptExecutor) driver;
 
-	public void actioClass() {
+		WebElement element = driver.findElement(By.xpath("//div[@class=\"card-body\"]/h5[text()='Elements']"));
 
-		Actions action = new Actions(driver);
+		js.executeScript("arguments[0].scrollIntoView();", element);
+		
+		
 
-	}
+		System.out.println(element.isDisplayed());
 
-	public static void takeSnapShot(WebDriver webdriver, String fileWithPath) throws Exception {
+		element.click();
+		
+//		Actions act = new Actions(driver);
+//		act.moveToElement(element).build().perform();
+//		
+//		System.out.println("nme");
 
-		TakesScreenshot scrShot = ((TakesScreenshot) webdriver);
-		File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
-		File DestFile = new File("C:\\Users\\Admin\\eclipse-workspace\\gaur\\Screenshot\\fullpage.png");
-		FileUtils.copyFile(SrcFile, DestFile);
-	}
+		WebElement textbox = driver.findElement(By.xpath("//span[text()=\"Text Box\"]"));
+
+		textbox.click();
+
+		WebElement fullname =   driver.findElement(By.id("userName"));
+		WebElement fullemail = driver.findElement(By.id("userEmail"));
+		WebElement cAddress = driver.findElement(By.id("currentAddress"));
+		WebElement paddres = driver.findElement(By.id("permanentAddress"));
+		WebElement submit = driver.findElement(By.id("submit"));
+
+		fullname.sendKeys("pushpendra kumar gaur");
+		fullemail.sendKeys("pkg201297@gmail.com");
+		cAddress.sendKeys("village post aulina bulandshahr");
+		paddres.sendKeys("greater Noida sec 36");
+
+		submit.click();
+
+		WebElement name = driver.findElement(By.id("name"));
+		String expected = name.getText();
+		WebElement actual = fullname;
+		
+		assertEquals(actual, expected);
+		
+		System.out.println("name");
+		
 	
-	
 
-	@AfterClass
-	public void closeBroswer() {
-
+		Thread.sleep(5000);
 		driver.close();
+
 	}
 
 }
