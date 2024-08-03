@@ -1,7 +1,6 @@
 package pageClass;
 
-import static org.testng.Assert.assertEquals;
-
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -9,13 +8,14 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
-
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class Form {
 
 	public static void main(String[] args) throws InterruptedException {
+
+		String Expecteddate = "12";
+		
 
 		WebDriverManager.chromedriver().setup();
 		WebDriver driver = new ChromeDriver();
@@ -47,31 +47,77 @@ public class Form {
 		WebElement Number = driver.findElement(By.id("userNumber"));
 		Number.sendKeys("8279652505");
 
-		driver.findElement(By.xpath("//label[text()=\"Sports\"]")).click();
-		Thread.sleep(1000);
-		driver.findElement(By.xpath("//label[text()=\"Reading\"]")).click();
-		//driver.findElement(By.id("uploadPicture")).sendKeys("C:\\Users\\Admin\\Desktop\\resume.txt");
+		WebElement dateBox = driver.findElement(By.id("dateOfBirthInput"));
 
-		driver.findElement(By.id("currentAddress")).sendKeys("village post aulina bulandshahr");
+		dateBox.click();
 
-		driver.findElement(By.id("submit")).click();
-		
-		String actualtext = studentName;
-		String axepectedtext = driver.findElement(By.xpath("//td[text()=\"pushpendra gaur\"]")).getText();
-		
-		assertEquals(actualtext, axepectedtext);
-		
-		WebElement update = driver.findElement(By.xpath("//div[@class=\"modal-body\"]"));
-		String updatedata = update.getText();
+		 while (true) 
+		 {
+	            String monthName = driver.findElement(By.xpath("//select[@class=\"react-datepicker__month-select\"]")).getText().trim();
+	            
+	            System.out.println(monthName);
+	            
+	            String yearName = driver.findElement(By.xpath("//select[@class='react-datepicker__year-select']")).getText().trim();
 
-		System.out.println(updatedata);
-		
-		System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
-		
-		System.out.println(driver.findElement(By.id("example-modal-sizes-title-lg")).getText());
-		
-		
+	            
+	            
+	            System.out.println(yearName);
+	            
+	            if (monthName.equalsIgnoreCase("June") && yearName.equalsIgnoreCase("2028") ) 
+	            {
+	            	System.out.println("p");
+	            	
+	            	List<WebElement> dayList = driver.findElements(By.xpath("//div[@tabindex=\"-1\"]"));
+	            	
+	            	
+	            	for (WebElement e : dayList) 
+	            	{
+	            		
+	            		String calenderDay = e.getText();
+	            		
+	            		
+	            		
+	            		if (calenderDay.equals(Expecteddate)) 
+	            		{
+							
+	            			e.click();
+	            			
+	            			
+	            			
+						      }
+	            		break;
+	            		}
+						
+	            	break;
+	            	
+	            }
+					         else {
+	                driver.findElement(By.xpath("//button[text()='Next Month']")).click();
+	            }
+		 }
+	        
 
-	}
+	Thread.sleep(1000);
 
-}
+	driver.findElement(By.xpath("//label[text()=\"Sports\"]")).click();driver.findElement(By.xpath("//label[text()=\"Reading\"]")).click();
+	// driver.findElement(By.id("uploadPicture")).sendKeys("C:\\Users\\Admin\\Desktop\\resume.txt");
+
+	driver.findElement(By.id("currentAddress")).sendKeys("village post aulina bulandshahr");
+
+	driver.findElement(By.id("submit")).click();
+//		
+//		String actualtext = studentName;
+//		String axepectedtext = driver.findElement(By.xpath("//td[text()=\"pushpendra gaur\"]")).getText();
+//		
+//		assertEquals(actualtext, axepectedtext);
+
+	WebElement update = driver.findElement(By.xpath("//div[@class=\"modal-body\"]"));
+	String updatedata = update.getText();
+
+	System.out.println(updatedata);
+
+	System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+
+	System.out.println(driver.findElement(By.id("example-modal-sizes-title-lg")).getText());
+
+}}
