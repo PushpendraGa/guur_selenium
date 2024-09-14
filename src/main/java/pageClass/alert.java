@@ -20,12 +20,12 @@ public class alert {
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		driver.get("https://demoqa.com/upload-download");
-
-		driver.findElement(By.xpath("//li[@id=\"item-7\"]/span[text()=\"Upload and Download\"]")).click();
-		Thread.sleep(2000);
-		WebElement file = driver.findElement(By.id("uploadFile"));
-		Actions ob = new Actions(driver);
-		ob.moveToElement(file).perform();
+//
+//		driver.findElement(By.xpath("//li[@id=\"item-7\"]/span[text()=\"Upload and Download\"]")).click();
+//		Thread.sleep(2000);
+//		WebElement file = driver.findElement(By.id("uploadFile"));
+//		Actions ob = new Actions(driver);
+//		ob.moveToElement(file).perform();
 		
 	}
 }
