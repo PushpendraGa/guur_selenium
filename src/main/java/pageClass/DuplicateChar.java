@@ -10,6 +10,8 @@ public class DuplicateChar {
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println("please enter the input");
+		
+		
 
       char[] a = {5};
       
@@ -17,12 +19,12 @@ public class DuplicateChar {
 		
     	  for (int j = i+1; j < a.length; j++) {
 			
-    		  if (a[1]==a[j]) {
+    		  if (a[i]==a[j]) {
 				
-    			  System.out.println("duplicate value"+a[1]);
+    			  System.out.println("duplicate value"+a[i]);
 			}
     		  else {
-				System.out.println("not a duplicate value in string"+a[1]);
+				System.out.println("not a duplicate value in string"+a[i]);
 			}
 		}
     	  
